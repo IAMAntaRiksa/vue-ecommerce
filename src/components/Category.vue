@@ -26,7 +26,6 @@ onMounted(() => {
     store.dispatch('category/getcategoryHeader')
 })
 
-
 const categories = computed(() => {
     return store.state.category.categories
 })

@@ -24,9 +24,20 @@ const router = createRouter({
       component: () => import("../views/category/Index.vue"),
     },
     {
+      path: '/category/:slug',
+      name: 'detail_category',
+      component: () => import('../views/category/Show.vue')
+    },
+    {
+      path: '/products',
+      name: 'products',
+      component: () => import("../views/category/Index.vue"),
+    },
+
+    {
       path: '/dashboard',
       name: 'dashboard',
-      component: () => import('../views/dashboard/Index.vue'),
+      component: () => import('../views/product/Index.vue'),
       //chek is loggedIn
       meta: {
         requiresAuth: true

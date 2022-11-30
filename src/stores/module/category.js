@@ -1,14 +1,17 @@
 import Api from '../../api/Api';
 const category = {
     namespaced: true,
-
     state: {
-        categories: []
+        categories: [],
+        product: []
     },
 
     mutations: {
         GET_CATEGORIES(state, payload) {
             state.categories = payload
+        },
+        GET_DETAILCATEGORY(state, payload) {
+            state.product = payload
         },
     },
 
@@ -40,7 +43,7 @@ const category = {
             return new Promise((resolve, reject) => {
                 Api.get(`/v1/categories/${slug}`)
                     .then((response) => {
-                        commit('GET_CATEGORIES', response.data.data.data)
+                        commit('GET_DETAILCATEGORY', response.data.data)
                         resolve()
                     }).catch((err) => {
                         reject(err.response.data)
@@ -48,8 +51,10 @@ const category = {
             });
         },
     },
-    getters: {
-        //
-    }
+    // getters: {
+    //     gettProduct(state) {
+    //         return state.product
+    //     }
+    // }
 }
 export default category
