@@ -57,7 +57,7 @@ const auth = {
                     commit('GET_USER', response.data)
                 })
         },
-        login({ commit }, user) {
+        login({ commit, dispatch }, user) {
             return new Promise((resolve, reject) => {
                 Api.post(`/login`, {
                     email: user.email,
@@ -75,31 +75,50 @@ const auth = {
                     commit('AUTH_SUCCESS', token, user)
 
                     commit('GET_USER', user)
-                    resolve()
+
+
+                    //////////// =======================================/////////////////
+                    //////////// Handel Cart 
+                    //get dat cart
+                    Api.get('/cart').then(response => {
+                        //commit mutation GET_CART
+                        commit('cart/SET_CARTS_DATA', response.data, { root: true })
+                    })
+                    //get total cart
+                    Api.get('/cart/total').then(response => {
+                        //commit mutation TOTAL_CART
+                        commit('cart/SET_CART_PRICE', response.data.total, { root: true })
+                    })
+                    //////////// =======================================/////////////////
+
+
+                    resolve(response)
                 }).catch((error) => {
                     localStorage.removeItem('token')
-                    reject(error.response.data.errors)
+                    reject(error.response.data)
                 });
             });
         },
 
-        logout() {
+        logout({ commit }) {
             return new Promise((resolve, reject) => {
-                Api.post(`/logout`).then((response) => {
-                    localStorage.removeItem('token')
-                    localStorage.removeItem('user')
 
-                    delete Api.defaults.headers.common['Authorization']
-                    //delete header axios
-                    delete Api.defaults.headers.common['Authorization']
-                    //return resolve ke component
-                    resolve()
-                    commit('AUTH_LOGOUT')
-                }).catch((err) => {
-                    reject(err)
-                });
+                commit('AUTH_LOGOUT')
 
+                localStorage.removeItem('token')
+                localStorage.removeItem('user')
+
+                /// ========== Handel Cart ========= \\\
+                commit('cart/SET_CARTS_DATA', 0, { root: true })
+                commit('cart/SET_CART_PRICE', 0, { root: true })
+
+                //delete header axios
+                delete Api.defaults.headers.common['Authorization']
+                //return resolve ke component
+
+                resolve()
             });
+
         }
     },
 

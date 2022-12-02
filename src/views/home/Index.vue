@@ -28,9 +28,12 @@
                             style="height: 15em;object-fit:cover;border-top-left-radius: .25rem;border-top-right-radius: .25rem;">
                     </div>
                     <div class="card-body">
-                        <a href="" class="card-title font-weight-bold" style="font-size:20px">
+                        <router-link :to="{
+                            name: 'detail_product',
+                            params: { slug: product.slug }
+                        }" class="card-title font-weight-bold" style="font-size:20px">
                             {{ product.title }}
-                        </a>
+                        </router-link>
                         <div class="discount mt-2" style="color: #999"><s>Rp. {{ moneyFormat(product.price) }}</s>
                             <span style="background-color: darkorange"
                                 class="badge badge-pill badge-success text-white">DISKON
@@ -39,8 +42,11 @@
                         <div class="price font-weight-bold mt-3" style="color: #47b04b;font-size:20px">
                             Rp. {{ moneyFormat(calculateDiscount(product))
                             }}</div>
-                        <a href="" class="btn btn-primary btn-md mt-3 btn-block shadow-md">LIHAT
-                            PRODUK</a>
+                        <router-link :to="{
+                            name: 'detail_product',
+                            params: { slug: product.slug }
+                        }" class="btn btn-primary btn-md mt-3 btn-block shadow-md">LIHAT
+                            PRODUK</router-link>
                     </div>
                 </div>
             </div>

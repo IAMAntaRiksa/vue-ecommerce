@@ -4,10 +4,11 @@
             <h5 class="font-weight-bold"><i class="fa fa-shopping-bag"></i> KATEGORI</h5>
             <hr>
             <ul class="list-group">
-                <a href="" v-for="category in categories" :key="category.id"
+                <router-link v-for="category in categories" :key="category.id"
+                    :to="{ name: 'detail_category', params: { slug: category.slug } }"
                     class="list-group-item shadow-sm font-weight-bold text-decoration-none text-dark">
                     <img :src="category.image" style="width:35px"> {{ category.name }}
-                </a>
+                </router-link>
 
                 <router-link :to="{ name: 'categories' }"
                     class="list-group-item text-center active shadow-sm font-weight-bold text-decoration-none">LIHAT

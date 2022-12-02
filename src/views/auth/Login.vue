@@ -57,7 +57,8 @@ const user = reactive({
     password: "",
 });
 //validation state
-const validation = ref([]);
+var validation = ref([]);
+
 //store vuex
 const store = useStore();
 //route
@@ -70,12 +71,9 @@ function login() {
         email,
         password,
     }).then(() => {
-        //redirect ke dashboard
         router.push({ name: "dashboard" });
     }).catch((error) => {
-        //assign validaation message
-        validation.value = error;
+        validation.value = error.errors;
     });
-
 }
 </script>

@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '../stores'
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -12,11 +14,17 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: () => import("../views/auth/Register.vue"),
+      meta: {
+        authPage: true
+      }
     },
     {
       path: '/login',
       name: 'login',
       component: () => import("../views/auth/Login.vue"),
+      meta: {
+        authPage: true
+      }
     },
     {
       path: '/categories',
@@ -29,15 +37,19 @@ const router = createRouter({
       component: () => import('../views/category/Show.vue')
     },
     {
-      path: '/products',
-      name: 'products',
-      component: () => import("../views/category/Index.vue"),
+      path: '/produts',
+      name: 'produts',
+      component: () => import("../views/product/Index.vue"),
     },
-
+    {
+      path: '/product/:slug',
+      name: 'detail_product',
+      component: () => import("../views/product/Index.vue"),
+    },
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: () => import('../views/product/Index.vue'),
+      component: () => import('../views/dashboard/Index.vue'),
       //chek is loggedIn
       meta: {
         requiresAuth: true
@@ -46,14 +58,18 @@ const router = createRouter({
   ]
 })
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    //cek nilai dari getters isLoggedIn di module auth
-    if (store.getters['auth/isLoggedIn']) {
+  if (to.matched.some(record => record.meta.authPage)) {
+    if (!store.getters['auth/isLoggedIn']) {
       next()
-      return
+    } else {
+      next(from)
     }
-    next('/login')
+  } else if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters['auth/isLoggedIn']) {
+      next('/login')
+    } else {
+      next()
+    }
   } else next()
-
 })
 export default router
