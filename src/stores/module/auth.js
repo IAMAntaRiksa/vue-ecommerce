@@ -41,6 +41,7 @@ const auth = {
 
                     commit('AUTH_SUCCESS', token, user)
 
+                    commit('GET_USER', user)
                     resolve()
                 }).catch((error) => {
                     localStorage.removeItem('token')
@@ -78,19 +79,12 @@ const auth = {
 
 
                     //////////// =======================================/////////////////
-                    //////////// Handel Cart 
-                    //get dat cart
-                    Api.get('/cart').then(response => {
-                        //commit mutation GET_CART
-                        commit('cart/SET_CARTS_DATA', response.data, { root: true })
-                    })
-                    //get total cart
-                    Api.get('/cart/total').then(response => {
-                        //commit mutation TOTAL_CART
-                        commit('cart/SET_CART_PRICE', response.data.total, { root: true })
-                    })
-                    //////////// =======================================/////////////////
+                    //////////// Handel Cart ////////////////
 
+                    dispatch('cart/cartCount', response.data, { root: true })
+                    dispatch('cart/cartTotal', response.data.total, { root: true })
+
+                    //////////// =======================================/////////////////
 
                     resolve(response)
                 }).catch((error) => {
@@ -114,7 +108,6 @@ const auth = {
 
                 //delete header axios
                 delete Api.defaults.headers.common['Authorization']
-                //return resolve ke component
 
                 resolve()
             });

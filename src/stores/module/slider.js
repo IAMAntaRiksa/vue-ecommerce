@@ -20,7 +20,6 @@ const slider = {
                     commit('GET_SLIDERS', response.data.data)
                     resolve()
                 }).catch((err) => {
-                    console.log(err.response.data)
                     reject(err.response.data)
                 });
             });

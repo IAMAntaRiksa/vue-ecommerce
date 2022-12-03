@@ -34,14 +34,12 @@
                         }" class="card-title font-weight-bold" style="font-size:20px">
                             {{ product.title }}
                         </router-link>
-                        <div class="discount mt-2" style="color: #999"><s>Rp. {{ moneyFormat(product.price) }}</s>
+                        <div class="discount mt-2" style="color: #999"><s>Rp. {{ moneyFormat(product.price) }} </s>
                             <span style="background-color: darkorange"
-                                class="badge badge-pill badge-success text-white">DISKON
-                                {{ product.discount }} %</span>
+                                class="badge badge-pill badge-success text-white">DISKON {{ product.discount }} %</span>
                         </div>
                         <div class="price font-weight-bold mt-3" style="color: #47b04b;font-size:20px">
-                            Rp. {{ moneyFormat(calculateDiscount(product))
-                            }}</div>
+                            Rp. {{ moneyFormat(calculateDiscount(product)) }}</div>
                         <router-link :to="{
                             name: 'detail_product',
                             params: { slug: product.slug }

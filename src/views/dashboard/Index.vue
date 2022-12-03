@@ -18,7 +18,7 @@
 </template>
 <script setup>
 import CustomerMenu from '../../components/CustomerMenu.vue'
-import { computed, onMounted, reactive } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 

@@ -72,6 +72,7 @@ import { useStore } from "vuex";
 const route = useRoute()
 const store = useStore()
 const router = useRouter()
+
 onMounted(() => {
     store.dispatch('product/getDetailProduct', route.params.slug)
 })

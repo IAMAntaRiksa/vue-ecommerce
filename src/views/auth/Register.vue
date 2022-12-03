@@ -96,7 +96,7 @@ function register() {
         password,
         password_confirmation,
     }).then(() => {
-        router.push({ name: "login" });
+        router.push({ name: 'dashboard' });
     }).catch((error) => {
         validation.value = error
     });

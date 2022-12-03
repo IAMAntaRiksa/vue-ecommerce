@@ -54,10 +54,10 @@ onMounted(() => {
                     <div class="col-md-4 col-5">
                         <div class="d-flex justify-content-end">
                             <div class="cart-header">
-                                <a href="#" class="btn search-button btn-md"
+                                <router-link :to="{ name: 'cart' }" class="btn search-button btn-md"
                                     style="color: #ffffff;background-color: #6677ef;border-color: #ffffff;"><i
-                                        class="fa fa-shopping-cart"></i>{{ cartCount }} | Rp. {{ moneyFormat(cartTotal)
-                                        }} </a>
+                                        class="fa fa-shopping-cart"></i> {{ cartCount }}
+                                </router-link>
                             </div>
                             <div class="account">
                                 <router-link :to="{ name: 'login' }" v-if="!isLoggedIn"

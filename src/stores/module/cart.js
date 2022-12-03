@@ -6,7 +6,7 @@ const cart = {
     state: {
         carts: [],
         cartTotal: 0,
-        // cartWeight: 0
+        cartWeight: 0
     },
 
     mutations: {
@@ -16,9 +16,9 @@ const cart = {
         SET_CART_PRICE(state, payload) {
             state.cartTotal = payload
         },
-        // SET_CART_WEIGHT(state, payload) {
-        //     state.cartWeight = payload
-        // },
+        SET_CART_WEIGHT(state, payload) {
+            state.cartWeight = payload
+        },
 
     },
 
@@ -91,21 +91,61 @@ const cart = {
                 })
         },
 
-        // cartWeight({ commit }) {
-        //     //get data token dan user
-        //     const token = localStorage.getItem('token')
+        cartWeight({ commit }) {
+            //get data token 
+            const token = localStorage.getItem('token')
 
-        //     //set axios header dengan type Authorization + Bearer token
-        //     Api.defaults.headers.common['Authorization'] = "Bearer " + token
+            Api.defaults.headers.common['Authorization'] = "Bearer " + token
 
-        //     Api.get('/cart/totalWeight')
-        //         .then(response => {
-        //             console.log('wewewe', response.data)
-        //             commit('SET_CART_WEIGHT', response.data)
-        //         })
-        // },
+            Api.get('/cart/totalWeight')
+                .then(response => {
+                    commit('SET_CART_WEIGHT', response.data.total)
+                })
+        },
+
+        removeCart({ dispatch }, cart_id) {
+            return new Promise((resolve, reject) => {
+                Api.post('/cart/remove', {
+                    cart_id: cart_id
+                }).then((response) => {
+
+                    dispatch('cartCount')
+
+
+                    resolve(response)
+                }).catch((err) => {
+                    reject(err)
+                });
+            });
+        },
+
+        checkOut({ dispatch }, { data }) {
+            return new Promise((resolve, reject) => {
+                Api.post('/checkout', {
+                    courier: data.courier_type,
+                    service: data.courier_service,
+                    cost_courier: data.cost_courier,
+                    weight: data.weight,
+                    name: data.name,
+                    phone: data.phone,
+                    province_id: data.province_id,
+                    city_id: data.city_id,
+                    address: data.address,
+                    grand_total: data.grand_total
+                }).then((response) => {
+                    dispatch('removeCart', response.data)
+                    resolve()
+                }).catch((error) => {
+                    reject(error)
+                });
+            });
+        }
     },
     getters: {
+        //get cart
+        getCart(state) {
+            return state.carts
+        },
         //count cart
         cartCount(state) {
             return state.carts.length
@@ -114,7 +154,11 @@ const cart = {
         //cart total
         cartTotal(state) {
             return state.cartTotal
+        },
+        cartWeight(state) {
+            return state.cartWeight
         }
+
     }
 }
 

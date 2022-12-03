@@ -55,6 +55,31 @@ const router = createRouter({
         requiresAuth: true
       }
     },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: () => import('../views/cart/Index.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+
+    {
+      path: '/order',
+      name: 'order',
+      component: () => import('../views/order/Index.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/order/:snap_token',
+      name: 'detail_order',
+      component: () => import('../views/order/Show.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
   ]
 })
 router.beforeEach((to, from, next) => {
