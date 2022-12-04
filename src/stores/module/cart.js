@@ -73,7 +73,6 @@ const cart = {
                 .then(response => {
                     //commit mutation GET_CART
                     commit('SET_CARTS_DATA', response.data)
-
                 })
 
         },
@@ -119,27 +118,6 @@ const cart = {
             });
         },
 
-        checkOut({ dispatch }, { data }) {
-            return new Promise((resolve, reject) => {
-                Api.post('/checkout', {
-                    courier: data.courier_type,
-                    service: data.courier_service,
-                    cost_courier: data.cost_courier,
-                    weight: data.weight,
-                    name: data.name,
-                    phone: data.phone,
-                    province_id: data.province_id,
-                    city_id: data.city_id,
-                    address: data.address,
-                    grand_total: data.grand_total
-                }).then((response) => {
-                    dispatch('removeCart', response.data)
-                    resolve()
-                }).catch((error) => {
-                    reject(error)
-                });
-            });
-        }
     },
     getters: {
         //get cart

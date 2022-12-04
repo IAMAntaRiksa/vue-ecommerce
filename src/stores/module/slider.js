@@ -8,7 +8,7 @@ const slider = {
     },
 
     mutations: {
-        GET_SLIDERS(state, payload) {
+        SET_SLIDERS_DATA(state, payload) {
             state.sliders = payload
         }
     },
@@ -17,7 +17,7 @@ const slider = {
         getSliders({ commit }) {
             return new Promise((resolve, reject) => {
                 Api.get('/v1/sliders').then((response) => {
-                    commit('GET_SLIDERS', response.data.data)
+                    commit('SET_SLIDERS_DATA', response.data.data)
                     resolve()
                 }).catch((err) => {
                     reject(err.response.data)

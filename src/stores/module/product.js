@@ -7,10 +7,10 @@ const product = {
     },
 
     mutations: {
-        GET_PRODUCTS(state, payload) {
+        SET_PRODUCTS_DATA(state, payload) {
             state.products = payload
         },
-        GET_DETAILPRODUCT(state, payload) {
+        SET_PRODUCT_DATA(state, payload) {
             state.product = payload
         }
     },
@@ -19,7 +19,7 @@ const product = {
         getProducts({ commit }) {
             return new Promise((resolve, reject) => {
                 Api.get(`v1/products`).then((response) => {
-                    commit('GET_PRODUCTS', response.data.data.data)
+                    commit('SET_PRODUCTS_DATA', response.data.data.data)
                     resolve()
                 }).catch((error) => {
                     reject(error)
@@ -30,7 +30,7 @@ const product = {
         getDetailProduct({ commit }, slug) {
             return new Promise((resolve, reject) => {
                 Api.get(`/v1/products/${slug}`).then((response) => {
-                    commit('GET_DETAILPRODUCT', response.data.data)
+                    commit('SET_PRODUCT_DATA', response.data.data)
                     resolve()
                 }).catch((error) => {
                     reject(error)

@@ -40,7 +40,7 @@ const ongkir = {
                         province_id: province_id
                     }
                 })
-                console.log(data)
+
                 commit('SET_CITIES_DATA', data)
             } catch (error) {
                 console.log(error)

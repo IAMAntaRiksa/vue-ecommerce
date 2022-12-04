@@ -7,10 +7,10 @@ const category = {
     },
 
     mutations: {
-        GET_CATEGORIES(state, payload) {
+        SET_CATEGORIES_DATA(state, payload) {
             state.categories = payload
         },
-        GET_DETAILCATEGORY(state, payload) {
+        SET_CATEGORY_DATA(state, payload) {
             state.product = payload
         },
     },
@@ -20,7 +20,7 @@ const category = {
             return new Promise((resolve, reject) => {
                 Api.get('/v1/categoryHeader')
                     .then((response) => {
-                        commit('GET_CATEGORIES', response.data.categories)
+                        commit('SET_CATEGORIES_DATA', response.data.categories)
                         resolve()
                     }).catch((err) => {
                         reject(err.response.data)
@@ -32,7 +32,7 @@ const category = {
             return new Promise((resolve, reject) => {
                 Api.get('/v1/categories')
                     .then((response) => {
-                        commit('GET_CATEGORIES', response.data.data.data)
+                        commit('SET_CATEGORIES_DATA', response.data.data.data)
                         resolve()
                     }).catch((err) => {
                         reject(err.response.data)
@@ -43,7 +43,7 @@ const category = {
             return new Promise((resolve, reject) => {
                 Api.get(`/v1/categories/${slug}`)
                     .then((response) => {
-                        commit('GET_DETAILCATEGORY', response.data.data)
+                        commit('SET_CATEGORY_DATA', response.data.data)
                         resolve()
                     }).catch((err) => {
                         reject(err.response.data)

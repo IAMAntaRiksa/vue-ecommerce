@@ -8,7 +8,7 @@ import product from './module/product'
 import cart from './module/cart'
 import order from './module/order'
 import ongkir from './module/ongkir'
-
+import checkout from './module/checkout'
 
 export default createStore({
     modules: {
@@ -18,6 +18,7 @@ export default createStore({
         product,
         cart,
         order,
-        ongkir
+        ongkir,
+        checkout
     }
 })

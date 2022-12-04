@@ -328,7 +328,6 @@ function getOngkir() {
         // set state cost menjadi true, untuk menampilkan pilihan cost pengiriman
         state.cost = true
 
-        console.log(response.data.costs)
         state.costs = response.data.costs
     }).catch(error => {
         console.log(error)
@@ -355,45 +354,46 @@ function getCostService() {
     //show button checkout
     state.buttonCheckout = true
 }
-// function checkOut() {
-//     //ceck apakah ada nama, phone, address dan berat produk ada?
-//     if (state.name && state.phone && state.address && cartWeight.value) {
-//         let data = {
-//             name: state.name,
-//             phone: state.phone,
-//             province_id: state.province_id,
-//             city_id: state.city_id,
-//             courier_type: state.courier_type,
-//             courier_service: state.courier_service,
-//             cost_courier: state.cost_courier,
-//             weight: cartWeight.value,
-//             address: state.address,
-//             grand_total: state.grand_total,
-//         }
-//         store.dispatch('cart/checkOut', data)
-//             .then((response) => {
-//                 //jika berhasil, arahakan ke detail order dengan parameter snap_token midtrans
-//                 console.log('berhasil', response.data)
 
-//                 router.push({
-//                     name: '/order'
-//                 })
-//             }).catch(error => {
-//                 console.log(error)
-//             })
 
-//     }
-//     //check validasi name
-//     if (!state.name) {
-//         validation.name = true
-//     }
-//     //check validasi phone
-//     if (!state.phone) {
-//         validation.phone = true
-//     }
-//     //check validasi address
-//     if (!state.address) {
-//         validation.address = true
-//     }
-// }
+async function checkOut() {
+
+    if (state.name && state.phone && state.address && cartWeight.value) {
+        let formData = new FormData();
+
+        formData.append('courier', state.courier_type)
+        formData.append('service', state.courier_service)
+        formData.append('cost_courier', state.cost_courier)
+        formData.append('weight', cartWeight.value)
+        formData.append('name', state.name)
+        formData.append('phone', state.phone)
+        formData.append('city_id', state.city_id)
+        formData.append('province_id', state.province_id)
+        formData.append('address', state.address)
+        formData.append('grand_total', state.grand_total)
+
+        await store.dispatch('checkout/storeCheckout', formData).then((response) => {
+            router.push({
+                name: 'detail_order',
+                params: {
+                    snap_token: response.snap_token
+                }
+            })
+        })
+
+    }
+
+    // check validasi name
+    if (!state.name) {
+        validation.name = true
+    }
+    //check validasi phone
+    if (!state.phone) {
+        validation.phone = true
+    }
+    //check validasi address
+    if (!state.address) {
+        validation.address = true
+    }
+}
 </script>

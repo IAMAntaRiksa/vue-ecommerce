@@ -52,18 +52,17 @@ const auth = {
         getUser({ commit }) {
             const token = localStorage.getItem('token')
             Api.defaults.headers.common['Authorization'] = "Bearer " + token
-            Api.get('/user')
-                .then(response => {
-                    //commit ke mutatuin GET_USER dengan hasil response
-                    commit('GET_USER', response.data)
-                })
+            Api.get('/user').then(response => {
+                //commit ke mutatuin GET_USER dengan hasil response
+                commit('GET_USER', response.data)
+            })
         },
         login({ commit, dispatch }, user) {
             return new Promise((resolve, reject) => {
                 Api.post(`/login`, {
                     email: user.email,
                     password: user.password,
-                },).then((response) => {
+                }).then((response) => {
 
                     const token = response.data.data.token
                     const user = response.data.data.user
